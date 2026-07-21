@@ -87,15 +87,13 @@
     "ANSIBLE_GALAXY_SERVER_AUTOMATION_HUB_TOKEN": "${localEnv:ANSIBLE_GALAXY_SERVER_AUTOMATION_HUB_TOKEN}",
     "GOOGLE_VERTEX_PROJECT": "${localEnv:GOOGLE_VERTEX_PROJECT}",
     "GOOGLE_VERTEX_LOCATION": "${localEnv:GOOGLE_VERTEX_LOCATION}",
-    "OPENROUTER_API_KEY": "${localEnv:OPENROUTER_API_KEY}",
-    "GOOGLE_GENERATIVE_AI_API_KEY": "${localEnv:GOOGLE_GENERATIVE_AI_API_KEY}",
     "ANSIBLE_COLLECTIONS_PATH": "/workspace/collections:/root/.ansible/collections:/usr/share/ansible/collections",
     "ANSIBLE_ROLES_PATH": "/workspace/roles:/root/.ansible/roles:/usr/share/ansible/roles",
     "XDG_CACHE_HOME": "/workspace/.cache"
   },
   "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=delegated",
   "workspaceFolder": "/workspace",
-  "postCreateCommand": "mkdir -p /workspace/.ansible/{collections,roles,galaxy_cache,tmp} /workspace/.cache && (claude plugin marketplace add leogallego/claude-ansible-skills || true) && (claude plugin install ansible-docs@claude-ansible-skills --scope user || true) && (claude plugin install ansible-good-practices@claude-ansible-skills --scope user || true) && (claude plugin install ansible-new-collection@claude-ansible-skills --scope user || true) && (claude plugin install ansible-new-ee@claude-ansible-skills --scope user || true) && (claude plugin install ansible-new-role@claude-ansible-skills --scope user || true) && (claude plugin install ansible-new-molecule@claude-ansible-skills --scope user || true) && (claude plugin install ansible-zen@claude-ansible-skills --scope user || true) ",
+  "postCreateCommand": "mkdir -p /workspace/.ansible/{collections,roles,galaxy_cache,tmp} /workspace/.cache && (claude plugin marketplace add leogallego/claude-ansible-skills@v1.2.2 || true) && (claude plugin install ansible-docs@claude-ansible-skills --scope user || true) && (claude plugin install ansible-good-practices@claude-ansible-skills --scope user || true) && (claude plugin install ansible-new-collection@claude-ansible-skills --scope user || true) && (claude plugin install ansible-new-ee@claude-ansible-skills --scope user || true) && (claude plugin install ansible-new-role@claude-ansible-skills --scope user || true) && (claude plugin install ansible-new-molecule@claude-ansible-skills --scope user || true) && (claude plugin install ansible-zen@claude-ansible-skills --scope user || true) ",
   "postStartCommand": "/usr/local/bin/init-claude-md.sh || true; /usr/local/bin/init-mcp-config.sh || true; /usr/local/bin/init-registry-auth.sh; /usr/local/bin/init-abbenay.sh || true",
   "waitFor": "postStartCommand"
 }
