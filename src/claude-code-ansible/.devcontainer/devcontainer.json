@@ -47,7 +47,7 @@
         "ansible.lightspeed.enabled": true,
         "ansible.lightspeed.provider": "rhcustom",
         "ansible.lightspeed.apiEndpoint": "http://localhost:8788",
-        "ansible.lightspeed.modelName": "vertex-claude/claude-sonnet-4",
+        "ansible.lightspeed.modelName": "anthropic/claude-sonnet-4-20250514",
         "ansible.lightspeed.apiKey": "dummy",
         "terminal.integrated.defaultProfile.linux": "bash",
         "terminal.integrated.profiles.linux": {
@@ -64,19 +64,15 @@
     "source=claude-code-bashhistory-${devcontainerId},target=/commandhistory,type=volume",
     "source=claude-code-config-${devcontainerId},target=/root/.claude,type=volume",
     "source=claude-code-vscode-extensions-${devcontainerId},target=/root/.vscode-server/extensions,type=volume",
-    "source=${localEnv:HOME}/.config/gcloud,target=/root/.config/gcloud,type=bind,readonly",
     "source=${localEnv:HOME}/.gitconfig,target=/root/.gitconfig,type=bind,readonly",
     "source=claude-code-gh-config-${devcontainerId},target=/root/.config/gh,type=volume"
   ],
-  "initializeCommand": "mkdir -p ${HOME}/.config/gcloud; touch ${HOME}/.gitconfig 2>/dev/null || true",
+  "initializeCommand": "touch ${HOME}/.gitconfig 2>/dev/null || true",
   "containerEnv": {
     "NODE_OPTIONS": "--max-old-space-size=4096",
     "HISTFILE": "/commandhistory/.bash_history",
     "CLAUDE_CONFIG_DIR": "/root/.claude",
     "ANTHROPIC_API_KEY": "${localEnv:ANTHROPIC_API_KEY}",
-    "CLAUDE_CODE_USE_VERTEX": "${localEnv:CLAUDE_CODE_USE_VERTEX}",
-    "ANTHROPIC_VERTEX_PROJECT_ID": "${localEnv:ANTHROPIC_VERTEX_PROJECT_ID}",
-    "CLOUD_ML_REGION": "${localEnv:CLOUD_ML_REGION}",
     "GH_TOKEN": "${localEnv:GH_TOKEN}",
     "AH_TOKEN": "${localEnv:ANSIBLE_GALAXY_SERVER_AUTOMATION_HUB_TOKEN}",
     "REGISTRY_REDHAT_IO_TOKEN": "${localEnv:REGISTRY_REDHAT_IO_TOKEN}",
@@ -85,8 +81,6 @@
     "DOCKER_USER": "${localEnv:DOCKER_USER}",
     "ANSIBLE_GALAXY_SERVER_AH_TOKEN": "${localEnv:ANSIBLE_GALAXY_SERVER_AUTOMATION_HUB_TOKEN}",
     "ANSIBLE_GALAXY_SERVER_AUTOMATION_HUB_TOKEN": "${localEnv:ANSIBLE_GALAXY_SERVER_AUTOMATION_HUB_TOKEN}",
-    "GOOGLE_VERTEX_PROJECT": "${localEnv:GOOGLE_VERTEX_PROJECT}",
-    "GOOGLE_VERTEX_LOCATION": "${localEnv:GOOGLE_VERTEX_LOCATION}",
     "ANSIBLE_COLLECTIONS_PATH": "/workspace/collections:/root/.ansible/collections:/usr/share/ansible/collections",
     "ANSIBLE_ROLES_PATH": "/workspace/roles:/root/.ansible/roles:/usr/share/ansible/roles",
     "XDG_CACHE_HOME": "/workspace/.cache"

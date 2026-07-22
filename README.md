@@ -85,27 +85,15 @@ Set `ABBENAY_VERSION=none` as a build arg to opt out.
 
 ### AI Provider Support
 
-The template supports multiple AI backends for Claude Code and Abbenay. All variables are optional and forwarded from your host.
-
-**Claude Code** — configure the Claude Code CLI and VS Code extension. Use either an Anthropic API key or Vertex AI credentials.
+**Claude Code** — configure the Claude Code CLI and VS Code extension with an Anthropic API key, or run `claude login` inside the container.
 
 | Variable | Description |
 |----------|-------------|
-| `ANTHROPIC_API_KEY` | Anthropic API key (alternative to Vertex AI or `claude login`) |
-| `CLAUDE_CODE_USE_VERTEX` | Enable Vertex AI backend |
-| `ANTHROPIC_VERTEX_PROJECT_ID` | GCP project ID |
-| `CLOUD_ML_REGION` | Vertex AI region, e.g. `us-east5` |
+| `ANTHROPIC_API_KEY` | Anthropic API key (alternative to `claude login`) |
 
-**Abbenay** — configure these to use Abbenay as an AI gateway for Ansible Lightspeed, GitHub Copilot, and other VS Code extensions that use the Language Model API. Abbenay also exposes an OpenAI-compatible endpoint on port 8788. Set the variables for whichever LLM provider you want to use (Vertex AI, OpenRouter, Google AI Studio, or local Ollama).
+**Abbenay** — exposes an OpenAI-compatible endpoint on port 8788, backed directly by the Anthropic API (`ANTHROPIC_API_KEY`, same credential as Claude Code above) and local Ollama (no key required, see `abbenay-config.yaml`). Used by Ansible Lightspeed and any other tool that speaks the Language Model/OpenAI API.
 
-| Variable | Description |
-|----------|-------------|
-| `GOOGLE_VERTEX_PROJECT` | GCP project ID (for Vertex AI providers like Claude, Gemini) |
-| `GOOGLE_VERTEX_LOCATION` | Vertex AI region |
-| `OPENROUTER_API_KEY` | OpenRouter API key (access to 100+ models) |
-| `GOOGLE_GENERATIVE_AI_API_KEY` | Google Generative AI API key (for Gemini via AI Studio) |
-
-The container mounts `~/.config/gcloud` read-only for credential access. Vertex AI users do not need an Anthropic account or API key.
+Other Abbenay-supported backends (Vertex AI, OpenRouter, Google AI Studio) are intentionally not wired up by default to keep the credential surface minimal — uncomment the relevant block in `abbenay-config.yaml` and add the matching env var/mount if you need one.
 
 ### Environment Variables
 
