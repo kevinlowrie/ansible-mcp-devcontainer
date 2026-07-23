@@ -1,0 +1,15 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/usr/local/bin/ansible-lint-hook.sh"
+          }
+        ]
+      }
+    ]
+  }
+}

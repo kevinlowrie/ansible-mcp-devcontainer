@@ -8,9 +8,14 @@ RUN dnf install -y nodejs npm sudo curl jq gh uv tmux unzip && dnf clean all
 # Install Claude Code
 RUN npm install -g @anthropic-ai/claude-code
 
-# Download Abbenay AI provider gateway (VS Code extension + bundled daemon)
-# Set to "none" to skip. See: https://github.com/redhat-developer/abbenay
-ARG ABBENAY_VERSION=v2026.6.4
+# Download Abbenay AI provider gateway (VS Code extension + bundled daemon).
+# Abbenay was Ansible Lightspeed's local backend here; Lightspeed is retired
+# from this devcontainer in favor of Claude Code + the ansible-know/ansible
+# MCP servers (see mcp-servers.json) plus the ansible-lint Claude Code hook
+# (see init-claude-hooks.sh). Default is "none" — set --build-arg
+# ABBENAY_VERSION=vX.Y.Z to bring it back if some other OpenAI-API-speaking
+# tool ever needs it. See: https://github.com/redhat-developer/abbenay
+ARG ABBENAY_VERSION=none
 RUN if [ "$ABBENAY_VERSION" != "none" ]; then \
       arch=$(uname -m | sed 's/x86_64/x64/' | sed 's/aarch64/arm64/') && \
       version_num=$(echo "$ABBENAY_VERSION" | sed 's/^v//') && \
@@ -32,8 +37,10 @@ ENV DEVCONTAINER=true
 RUN rm -rf /root/.ansible && ln -s /workspace/.ansible /root/.ansible
 
 # Copy and set up startup scripts
-COPY init-registry-auth.sh init-abbenay.sh init-claude-md.sh init-mcp-config.sh /usr/local/bin/
+COPY init-registry-auth.sh init-abbenay.sh init-claude-md.sh init-mcp-config.sh \
+     init-claude-hooks.sh ansible-lint-hook.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/init-registry-auth.sh /usr/local/bin/init-abbenay.sh \
-    /usr/local/bin/init-claude-md.sh /usr/local/bin/init-mcp-config.sh
+    /usr/local/bin/init-claude-md.sh /usr/local/bin/init-mcp-config.sh \
+    /usr/local/bin/init-claude-hooks.sh /usr/local/bin/ansible-lint-hook.sh
 
 WORKDIR /workspace

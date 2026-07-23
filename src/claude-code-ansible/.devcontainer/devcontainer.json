@@ -44,11 +44,6 @@
         "yaml.schemas": {
           "https://raw.githubusercontent.com/ansible/ansible-lint/main/src/ansiblelint/schemas/ansible.json": ["playbooks/*.yml", "playbooks/*.yaml", "**/tasks/*.yml", "**/tasks/*.yaml"]
         },
-        "ansible.lightspeed.enabled": true,
-        "ansible.lightspeed.provider": "rhcustom",
-        "ansible.lightspeed.apiEndpoint": "http://localhost:8788",
-        "ansible.lightspeed.modelName": "anthropic/claude-sonnet-4-20250514",
-        "ansible.lightspeed.apiKey": "dummy",
         "terminal.integrated.defaultProfile.linux": "bash",
         "terminal.integrated.profiles.linux": {
           "bash": {
@@ -88,6 +83,6 @@
   "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=delegated",
   "workspaceFolder": "/workspace",
   "postCreateCommand": "mkdir -p /workspace/.ansible/{collections,roles,galaxy_cache,tmp} /workspace/.cache && (claude plugin marketplace add leogallego/claude-ansible-skills@v1.2.2 || true) && (claude plugin install ansible-docs@claude-ansible-skills --scope user || true) && (claude plugin install ansible-good-practices@claude-ansible-skills --scope user || true) && (claude plugin install ansible-new-collection@claude-ansible-skills --scope user || true) && (claude plugin install ansible-new-ee@claude-ansible-skills --scope user || true) && (claude plugin install ansible-new-role@claude-ansible-skills --scope user || true) && (claude plugin install ansible-new-molecule@claude-ansible-skills --scope user || true) && (claude plugin install ansible-zen@claude-ansible-skills --scope user || true) ",
-  "postStartCommand": "/usr/local/bin/init-claude-md.sh || true; /usr/local/bin/init-mcp-config.sh || true; /usr/local/bin/init-registry-auth.sh; /usr/local/bin/init-abbenay.sh || true",
+  "postStartCommand": "/usr/local/bin/init-claude-md.sh || true; /usr/local/bin/init-mcp-config.sh || true; /usr/local/bin/init-claude-hooks.sh || true; /usr/local/bin/init-registry-auth.sh",
   "waitFor": "postStartCommand"
 }
