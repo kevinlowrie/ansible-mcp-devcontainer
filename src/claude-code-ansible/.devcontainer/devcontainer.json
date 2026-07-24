@@ -68,6 +68,10 @@
     "HISTFILE": "/commandhistory/.bash_history",
     "CLAUDE_CONFIG_DIR": "/root/.claude",
     "ANTHROPIC_API_KEY": "${localEnv:ANTHROPIC_API_KEY}",
+    "OPENAI_API_KEY": "${localEnv:OPENAI_API_KEY}",
+    "GEMINI_API_KEY": "${localEnv:GEMINI_API_KEY}",
+    "ANTHROPIC_BASE_URL": "http://127.0.0.1:3456",
+    "ANTHROPIC_AUTH_TOKEN": "local-ccr-no-auth-configured",
     "GH_TOKEN": "${localEnv:GH_TOKEN}",
     "AH_TOKEN": "${localEnv:ANSIBLE_GALAXY_SERVER_AUTOMATION_HUB_TOKEN}",
     "REGISTRY_REDHAT_IO_TOKEN": "${localEnv:REGISTRY_REDHAT_IO_TOKEN}",
@@ -83,6 +87,6 @@
   "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=delegated",
   "workspaceFolder": "/workspace",
   "postCreateCommand": "mkdir -p /workspace/.ansible/{collections,roles,galaxy_cache,tmp} /workspace/.cache && (claude plugin marketplace add leogallego/claude-ansible-skills@v1.2.2 || true) && (claude plugin install ansible-docs@claude-ansible-skills --scope user || true) && (claude plugin install ansible-good-practices@claude-ansible-skills --scope user || true) && (claude plugin install ansible-new-collection@claude-ansible-skills --scope user || true) && (claude plugin install ansible-new-ee@claude-ansible-skills --scope user || true) && (claude plugin install ansible-new-role@claude-ansible-skills --scope user || true) && (claude plugin install ansible-new-molecule@claude-ansible-skills --scope user || true) && (claude plugin install ansible-zen@claude-ansible-skills --scope user || true) ",
-  "postStartCommand": "/usr/local/bin/init-claude-md.sh || true; /usr/local/bin/init-mcp-config.sh || true; /usr/local/bin/init-claude-hooks.sh || true; /usr/local/bin/init-registry-auth.sh",
+  "postStartCommand": "/usr/local/bin/init-claude-md.sh || true; /usr/local/bin/init-mcp-config.sh || true; /usr/local/bin/init-claude-hooks.sh || true; /usr/local/bin/init-registry-auth.sh; /usr/local/bin/init-ccr.sh || true",
   "waitFor": "postStartCommand"
 }

@@ -1,0 +1,49 @@
+{
+  "LOG": true,
+  "LOG_LEVEL": "info",
+  "NON_INTERACTIVE_MODE": true,
+  "HOST": "127.0.0.1",
+  "API_TIMEOUT_MS": 600000,
+  "Providers": [
+    {
+      "name": "anthropic",
+      "api_base_url": "https://api.anthropic.com/v1/messages",
+      "api_key": "$ANTHROPIC_API_KEY",
+      "models": [
+        "claude-sonnet-4-20250514",
+        "claude-3-5-haiku-20241022"
+      ],
+      "transformer": {
+        "use": ["Anthropic"]
+      }
+    },
+    {
+      "name": "openai",
+      "api_base_url": "https://api.openai.com/v1/chat/completions",
+      "api_key": "$OPENAI_API_KEY",
+      "models": [
+        "gpt-5"
+      ]
+    },
+    {
+      "name": "gemini",
+      "api_base_url": "https://generativelanguage.googleapis.com/v1beta/models/",
+      "api_key": "$GEMINI_API_KEY",
+      "models": [
+        "gemini-2.5-pro",
+        "gemini-2.5-flash"
+      ],
+      "transformer": {
+        "use": ["gemini"]
+      }
+    }
+  ],
+  "Router": {
+    "default": "anthropic,claude-sonnet-4-20250514",
+    "background": "anthropic,claude-3-5-haiku-20241022",
+    "think": "openai,gpt-5",
+    "longContext": "gemini,gemini-2.5-pro",
+    "longContextThreshold": 60000,
+    "webSearch": "gemini,gemini-2.5-flash"
+  }
+}
